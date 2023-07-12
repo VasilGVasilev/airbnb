@@ -1,4 +1,5 @@
-why does useRef hook need angle brackets specifically?
+**why does useRef hook need angle brackets specifically?**
+
 ```sh
 import React, { useRef } from 'react';
 
