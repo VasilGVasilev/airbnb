@@ -1,7 +1,16 @@
 'use client'
 import { AiOutlineMenu } from 'react-icons/ai'
+import Avatar from '../Avatar'
+import { useState, useCallback } from 'react'
+import MenuItem from './MenuItem'
 
 const UserMenu = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    // good practice that toggle is made reusable although in such a small project we can go without caching the function
+    const toggleOpen = useCallback(()=>{
+        setIsOpen((value) => !value);
+    }, []);
+
   return (
     <div className="relative">
         <div className="flex flex-row items-center gap-3">
@@ -23,7 +32,7 @@ const UserMenu = () => {
                 AirBnb your home
             </div>
             <div
-                onClick={()=>{}}
+                onClick={toggleOpen}
                 className="
                     p-4
                     md:py-1
@@ -46,10 +55,40 @@ const UserMenu = () => {
                 </div>
             </div>
         </div>
+        {isOpen && (
+            <div
+                className='
+                    absolute
+                    rounded-xl
+                    shadow-md
+                    w-[40vw]
+                    md:w-3/4
+                    bg-white
+                    overflow-hidden
+                    right-0
+                    top-12
+                    text-sm
+                '
+            >
+                <div className='flex flex-col cursor-pointer'>
+                    <>
+                        <MenuItem 
+                            onClick={()=>{}}
+                            label="Login"
+                        />
+                        <MenuItem 
+                            onClick={()=>{}}
+                            label="Sign up"
+                        />
+                    </>
+                </div>
+            </div>
+        )}
     </div>
   )
 }
 
 export default UserMenu
 
-// NB By default, Tailwind CSS provides a transition timing function of ease-in-out, a duration of 150ms, and a transition property of all.
+// NB Transition only By default, Tailwind CSS provides a transition timing function of ease-in-out, a duration of 150ms, and a transition property of all.
+// NB useCallback - lets you cache (saves functionality, ex. toggle) a function definition between re-renders, During subsequent renders, it will either return an already stored 'fn' function from the last render (if the dependencies haven’t changed), or return the fn function you have passed during this render.
