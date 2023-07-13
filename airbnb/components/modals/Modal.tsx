@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 interface ModalProps {
@@ -30,7 +30,11 @@ const Modal: React.FC<ModalProps> = ({
     secondaryLabel
 
 }) => {
-    const [showModal, setShowModal] = useState();
+    const [showModal, setShowModal] = useState(isOpen);
+
+    useEffect(() => {
+        setShowModal(isOpen);
+    }, [isOpen])
   return (
     <div>
       
