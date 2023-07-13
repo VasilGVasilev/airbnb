@@ -1,0 +1,1 @@
+a hydration error can be solved with a wrapper that utilizes useEffect and returns the subcomponents provided useEffect has been executed (which is only after intial full render) or if not returns null [see](https://www.youtube.com/watch?v=c_-b_isI4vg&t=1500s)
