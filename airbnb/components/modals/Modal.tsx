@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 
 interface ModalProps {
@@ -30,16 +30,100 @@ const Modal: React.FC<ModalProps> = ({
     secondaryLabel
 
 }) => {
-    const [showModal, setShowModal] = useState(isOpen);
+  const [showModal, setShowModal] = useState(isOpen);
 
-    useEffect(() => {
-        setShowModal(isOpen);
-    }, [isOpen])
+  useEffect(() => {
+      setShowModal(isOpen);
+  }, [isOpen])
+
+  const handleClose = useCallback(() => {
+    if(disabled){
+      return;
+    }
+
+    setShowModal(false);
+
+    setTimeout(()=>{
+      onClose();
+    }, 300) // setTimeout due to animation to be added
+  }, [disabled, onClose])
+
+  const handleSubmit = useCallback(()=> {
+    if(disabled){
+      return;
+    }
+
+    onSubmit();
+  }, [disabled, onSubmit])
+
+  const handleSecondaryAction = useCallback(()=>{
+    if (disabled || !secondaryAction){
+      return;
+    }
+    secondaryAction();
+  }, [disabled, secondaryAction])   
+
+  if (!isOpen){
+    return null;
+  }
+
   return (
-    <div>
-      
+    <div
+      className="
+        justify-center
+        items-center
+        flex
+        overflow-x-hidden
+        overflow-y-auto
+        fixed
+        inset-0
+        z-50
+        outline-none
+        focus:outline-nonde
+        bg-neutral-800/70
+      "
+    >
+      <div
+        className="
+          relative
+          w-full
+          md:w-4/6
+          lg:w-3/6
+          xl:w-2/5
+          my-6
+          mx-autp
+          h-full
+          md:h-auto
+          lg:h-auto
+        "
+      >
+        {/* CONTENT */}
+        <div
+          className={`
+            translate
+            duration-300
+            h-full
+            ${showModal ? 'translate-y-0' : 'translate-y-full'}
+            ${showModal ? 'opacity-100' : 'opacity-0'}
+          `}
+        >
+
+        </div>
+      </div> 
     </div>
   )
 }
 
 export default Modal
+
+// NB inset-0 
+// In this example, the relative class is used on the parent element to create a positioning context for the absolutely positioned child element. 
+// The absolute class is used on the child element to position it relative to its nearest positioned ancestor, which in this case is the parent element. 
+// Finally, the inset-0 class is used to set the top, right, bottom, and left properties of the child element to 0, CAUSING IT TO FILL THE ENTIRE PARENT ELEMENT.
+
+// NB bg-neutral-800/70 the slash reduces opacity by 70%
+
+// NB duration
+// When we set showModal to true and opacity becomes 100%, duration reflects on the change between the previous render configuration of opacity being 0% 
+// and the current render configuration of opacity being 100% and makes the transition between the two figures of opacity change for 300 ms
+// Thus, the duration class, in this case, relates to the time it takes for the transition to occur when properties change on re-render.
