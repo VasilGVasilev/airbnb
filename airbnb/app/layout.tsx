@@ -2,7 +2,7 @@ import Navbar from '@/components/navbar/Navbar'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
-import Modal from '../components/modals/Modal'
+import RegisterModal from '@/components/modals/RegisterModal'
 
 const font = Nunito({
   subsets: ['latin']
@@ -21,10 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <Modal isOpen ></Modal>
+        <RegisterModal></RegisterModal>
         <Navbar></Navbar>
         {children}
       </body>
     </html>
   )
 }
+
+// NB simply putting a prop without any ={} will make it a boolean of value true:
+// <Modal title='Modal' isOpen ></Modal> title is Modal, isOpen is true
