@@ -64,6 +64,7 @@ const Modal: React.FC<ModalProps> = ({
     secondaryAction();
   }, [disabled, secondaryAction])   
 
+  // isOpen comes from global state, depending on which modal, ex. registerModal.isOpen, if false, nothing is rendered, if true - render registerModal
   if (!isOpen){
     return null;
   }

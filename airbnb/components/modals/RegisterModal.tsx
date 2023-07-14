@@ -10,12 +10,15 @@ import {
     useForm
 } from 'react-hook-form';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
-import { userAgentFromString } from 'next/server';
+import Modal from './Modal';
+import Heading from '../Heading';
+import Input from '../inputs/Input';
+
 
 
 const RegisterModal = () => {
   
-  const RegisterModal = useRegisterModal();
+  const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -33,13 +36,39 @@ const RegisterModal = () => {
   })
   
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setIsLoading(true)
+    setIsLoading(true);
+
+    axios.post('/api/register', data)
+        .then(()=>{
+            registerModal.onClose();
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+        .finally(()=>{
+            setIsLoading(false);
+        })
   }
+  const bodyContent = (
+    <div className='flex flex-col gap-4'>
+        <Heading 
+            title='Welcome to Airbnb'
+            subtitle='Create an account'
+        />
+        <Input />
+    </div>
+  )
 
   return (
-    <div>
-      
-    </div>
+    <Modal 
+        disabled={isLoading}
+        isOpen={registerModal.isOpen}
+        title="Register"
+        actionLabel='Continue'
+        onClose={registerModal.onClose}
+        onSubmit={handleSubmit(onSubmit)} // useForm requires handleSubmit wrapper around your function
+        body={bodyContent}
+    ></Modal> //disabled becomes true when we are loading something, thus, awaiting
   )
 }
 

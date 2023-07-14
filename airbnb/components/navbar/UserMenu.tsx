@@ -4,8 +4,10 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import Avatar from '../Avatar'
 import { useState, useCallback } from 'react'
 import MenuItem from './MenuItem'
+import useRegisterModal from '@/app/hooks/useRegisterModal'
 
 const UserMenu = () => {
+    const registerModal = useRegisterModal();
     const [isOpen, setIsOpen] = useState(false);
     // good practice that toggle is made reusable although in such a small project we can go without caching the function
     const toggleOpen = useCallback(()=>{
@@ -78,7 +80,7 @@ const UserMenu = () => {
                             label="Login"
                         />
                         <MenuItem 
-                            onClick={()=>{}}
+                            onClick={registerModal.onOpen}
                             label="Sign up"
                         />
                     </>
