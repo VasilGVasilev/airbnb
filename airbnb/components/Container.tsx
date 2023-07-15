@@ -23,7 +23,7 @@ const Container: React.FC<ContainerProps> = ({children}) => {
 
 export default Container
 
-// NB React.FC -> more verbose, also it had implicit definition of children, but not anymore since React 18 type
+// NB React.FC -> more verbose, also it HAD (in the past) implicit definition of children, but not anymore since React 18 type
 // instead of: const Container = ({children}: {children: React.ReactNode}) or const Container = ({children}: ContainerProps)
 // we do: const Container: React.FC<ContainerProps> = ({children})
 // better go with normal function /const Container = ({children}: ContainerProps)/ rather than React.FC<>
