@@ -23,3 +23,31 @@ const onSubmit = (data, e) => {
 ```
 
 [see for handleSubmit API](https://youtu.be/KzcPKB9SOEk)
+[validation](https://dev.to/m0nm/form-validation-with-useform-hook-1p33)
+
+but basically extract handlesubmit to wrap the submit function passed into the Modal (at Modal component level)
+```sh
+onSubmit={handleSubmit(onSubmit)}
+```
+
+extract the register function (at specific Modal component level)
+```sh
+const {
+    register,
+    handleSubmit,
+    formState: {
+        errors,
+    }
+} = useForm<FieldValues>({
+    defaultValues: {
+        name: '',
+        email: '',
+        password: ''
+    }
+})
+```
+
+apply modal to speicifc input tag
+```sh
+{...register(id, {required} )}
+```
