@@ -52,4 +52,29 @@ datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
 }
+
+model User {
+    id Int @id @default(autoincrement())
+    name String
+}
+```
+
+MERE definition of prisma schema does not do anything with the database,
+you need to tell prisma to apply the schema to the DB -> migrate
+
+npx prisma migrate dev --name init
+
+the code above creates a new migration file which interacts with postgresql db
+
+in summary prisma end goal is to generate client, which is the code that is going to be used to interact with your DB.
+
+migration.sql
+
+```sh
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+)
 ```
