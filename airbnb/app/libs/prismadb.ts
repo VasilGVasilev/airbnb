@@ -12,3 +12,4 @@ export default client;
 
 
 // see explanation in prismadb.md , but to prevent hot reloading from draining resources, assigning to global var will mean no affect of hot reload which is below global context, like variables retaining value above function
+// best practice for next 13 -> https://vercel.com/guides/nextjs-prisma-postgres
