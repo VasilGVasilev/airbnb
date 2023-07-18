@@ -11,4 +11,4 @@ if (process.env.NODE_END !== 'production') globalThis.prisma = client
 export default client;
 
 
-// see explanation in prismadb.md , but to prevent hot reloading from draining resources, assigning to global var will mean no affect of hot reload
+// see explanation in prismadb.md , but to prevent hot reloading from draining resources, assigning to global var will mean no affect of hot reload which is below global context, like variables retaining value above function
