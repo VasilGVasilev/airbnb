@@ -52,3 +52,10 @@ Notice that:
 - Axios automatically transforms the data returned from the server, but with fetch() you have to call the response.json method to parse the data to a JavaScript object. More info on what the response.json method does can be found here
 
 - With Axios, the data response provided by the server can be accessed with in the data object, while for the fetch() method, the final data can be named any variable
+
+
+We use axios to send for example a request to '/api/register', thus, we create such a folder using the folder structure of the app router. in this /api/register/route.ts we can finally (since app router) define HTTP METHODS as per:
+```sh
+export async function POST()
+```
+MIND that this is the receiving end of an axios or FETCH API request. This route.ts accepts the request put forward via the axios functionality
