@@ -1,3 +1,7 @@
 1. we use the react hook form to extract the data from the input fields via register function and onSubmit={handleSubmit(onSubmit)}, data registered via register function is auto-incorporated into the handlesubmit-> onSubmit and can be used as data param
 2. we use the axios in RegisterModal to send a post request with the data to the app -> /api/register route link FE->BE
-3. we accept the request 
+3. at '/api/register/', we accept the request, extract the body, HASH the password in BE, server side to store in DB the hashed value not the real password, create a new entry (obj) to the DB and return that entry as a NextResponse.json(obj)
+
+During the tutorial I have stumbled on figuring out the next-auth. In reality, next-auth is an authenticationa and authorisation tool. Meaning the steps above register a user, while next-auth and currently via the prisma provider, we authenticate (sign in), the user. next-auth sets the login form with credentials, checks them for inconsistencies (validation service of DB data [see mongoose does not provide and is done manually](https://github.com/VasilGVasilev/softuni-JS-Back-End/blob/main/ExamPrep/exam/my-skeleton/services/authServices.js)), creates a webtoken (jwt) and provides way to persist it + NextResponse obj, not like [mongoose where it is manual](https://github.com/VasilGVasilev/softuni-JS-Back-End/blob/main/ExamPrep/exam/my-skeleton/controllers/authController.js)
+
+It is important to differentiate between validation of data via the react-hook-form when we set requirements such as min lenght of password or empty fields and later validation of input data in comparison with DB data -> user not found, wrong password.

@@ -84,6 +84,7 @@ const Modal: React.FC<ModalProps> = ({
         focus:outline-nonde
         bg-neutral-800/70
       "
+      // div with z-index is parent div, so the parent div cannot override the stacking order of the nested child
     >
       <div
         className="
@@ -93,7 +94,7 @@ const Modal: React.FC<ModalProps> = ({
           lg:w-3/6
           xl:w-2/5
           my-6
-          mx-autp
+          mx-auto
           h-full
           md:h-auto
           lg:h-auto
