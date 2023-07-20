@@ -54,7 +54,7 @@ export const authOptions: AuthOptions = {
 
     ],
     pages: {
-        signIn: '/',
+        signIn: '/', //redirect if error or callback
     },
     debug: process.env.NODE_ENV === 'development', //enable debug only in development
     session: {
