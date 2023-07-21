@@ -165,3 +165,6 @@ const Book = mongoose.model('Book', bookSchema);
 ```
 
 In Mongoose, you can  represent the owner of the relationship by creating a reference to the parent model in the child model using the **ref** property, and in Prisma, you achieve this through the Author model's books **field**.
+
+
+once you push the schema to sync with DB you can extract a model for a type, for example -> User is used in the NavbarProps interface 
