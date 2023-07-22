@@ -25,7 +25,12 @@ export default async function getCurrentUser() {
             return null;
         }
 
-        return currentUser;
+        return {
+            ...currentUser,
+            createdAt: currentUser.createdAt.toISOString(),
+            updatedAt: currentUser.updatedAt.toISOString(),
+            emailVerified: currentUser.emailVerified?.toISOString() || null
+        }; //to avoid possible error that object cannot be of type Date, but remember to change the User you are importing via primsa, too
 
     } catch (error: any) {
         return null; //no error handling since we are in Server Component and it is a direct communcation with DB, no API calls (meaning a service that requests in BE and BE requests in DB )
