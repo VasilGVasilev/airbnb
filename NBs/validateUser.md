@@ -18,7 +18,7 @@ NB1 - mind that I used pages, if I used the app (unstable at the moment of creat
 ```
 
 5. Social login
-- github go to settings/developer settings/OAuthApp -> create and copy envs to post clientID and clientSecret (URLs for production should be localhost:3000), then add on submit button in Regsiter modal to be:
+- github go to settings/developer settings/OAuthApp -> create and copy envs to post clientID and clientSecret (URLs for production should be localhost:3000), then add on submit button in Regsiter/Login modal to be:
 
 ```sh
     onClick={()=>signIn('github')}

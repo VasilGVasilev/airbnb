@@ -17,3 +17,32 @@ const MyComponent = (): TSX.Element => {
   );
 };
 ```
+
+BUT if you want to pass on props in a component such as:
+```sh
+<Avatar src={currentUser?.image}>
+```
+
+you should always define an interface for the props INSIDE THE COMPONENT:
+
+```sh
+interface AvatarProps {
+  src?: string | null | undefined
+}
+
+const Avatar: React.FC<AvatarProps> = ({src}) => {
+  return (
+    <div>
+      <Image
+        className="rounded-full"
+        height={30}
+        width={30}
+        alt="Avatar"
+        src={src || "/images/placeholder.jpg"}
+      />
+    </div>
+  )
+}
+
+export default Avatar
+```
