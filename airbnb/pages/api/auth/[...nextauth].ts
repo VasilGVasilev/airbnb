@@ -8,6 +8,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import bcrypt from 'bcrypt';
 
+// NB when using Github and Google with same email, there may be a conflict with different accounts same email!
 export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [

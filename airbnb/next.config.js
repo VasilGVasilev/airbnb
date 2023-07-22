@@ -2,7 +2,8 @@
 const nextConfig = {
     images: {
         domains: [
-            "avatars.githubusercontent.com", //https://nextjs.org/docs/messages/next-image-unconfigured-host
+            "avatars.githubusercontent.com", // otherwise error
+            "lh3.googleusercontent.com", // otherwise error
         ]
     }
 }
