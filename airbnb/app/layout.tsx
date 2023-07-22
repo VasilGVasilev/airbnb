@@ -2,7 +2,7 @@ import Navbar from '@/components/navbar/Navbar'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
-import TaosterProvider from './providers/ToasterProvider'
+import ToasterProvider from './providers/ToasterProvider'
 
 import RegisterModal from '@/components/modals/RegisterModal'
 import LoginModal from '@/components/modals/LoginModal'
@@ -26,7 +26,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <TaosterProvider></TaosterProvider>
+        <ToasterProvider></ToasterProvider>
         <RegisterModal></RegisterModal>
         <LoginModal></LoginModal>
         <Navbar currentUser={currentUser}></Navbar>
