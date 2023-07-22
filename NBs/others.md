@@ -1,0 +1,1 @@
+React strict mode double renders in developer mode to catch bugs, but not in production.

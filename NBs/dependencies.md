@@ -6,3 +6,4 @@ react-hot-toast
 prisma
 next-auth @prisma/client @next-auth/prisma-adapter
 bcrypt + -D @types/bcrypt
+query-string
