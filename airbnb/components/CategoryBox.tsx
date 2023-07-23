@@ -42,9 +42,10 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
         }, {skipNull: true}) //skipNull filters empty options
 
         router.push(url)
-    }, [])
+    }, [label, params, router])
     return (
         <div
+            onClick={handleClick}
             className={`
             flex 
             flex-col 
