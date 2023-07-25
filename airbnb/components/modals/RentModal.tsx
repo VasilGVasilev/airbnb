@@ -9,6 +9,13 @@ import CategoryInput from "../inputs/CategoryInput";
 
 import { useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import CountrySelect from "../inputs/CountrySelect";
+
+// the modal constist of the following parts:
+// we have the form initialised and 'watch' and 'setValue' necessary for its update
+// we have a structure reflecting the steps and the above mentioned update follows this structure:
+// first we update the form based on category step, then on location, then info, etc
+// that structure is done in such a manner (see const onSubmit) so when we trigger submit, it goes to next enum element, triggering actual axios.post() only if we are on price
 
 enum STEPS {
     CATEGORY = 0,
@@ -45,9 +52,9 @@ const RentModal = () => {
             title: '',
             description: '',
         }
-    });
+    });//values are set here and updated along the way of finishing the rentModal form, all sent finally with the final submit
 
-    const category = watch('category'); //????Both of these result in when you select, catrogy stays selected
+    const category = watch('category'); //we utilize watch to watch for category input changes (it was first set in defatultValues)
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -55,7 +62,7 @@ const RentModal = () => {
             shouldTouch: true,
             shouldValidate: true
         })
-    } //????Both of these result in when you select, catrogy stays selected
+    } //setValue needs to be a callback since we have a click, thus, custom wrapper -> setCustomValue(setValue)
 
     const onBack = () => {
         setStep((value) => value - 1);
@@ -65,6 +72,7 @@ const RentModal = () => {
         setStep((value) => value + 1);
     }
 
+    // LIMIT OF BTN NOT OVERFLOWING OR FALLING BELOW ENUM
     const actionLabel = useMemo(()=>{
         // do calculations
         if(step === STEPS.PRICE){
@@ -83,7 +91,9 @@ const RentModal = () => {
         return 'Back';
     }, [step])
 
-    // let because depending on enum we have different contents
+
+
+    // let because depending on enum we have different contents, the following bodyContent will be default
     let bodyContent = (
         <div className="flex flex-col gap-8">
             <Heading 
@@ -106,8 +116,8 @@ const RentModal = () => {
                         className="col-span-1"
                     >
                         <CategoryInput 
-                            onClick={(category)=>setCustomValue('category', category)}//????Both of these result in when you select, catrogy stays selected
-                            selected={category === item.label}//????Both of these result in when you select, catrogy stays selected
+                            onClick={(category) => setCustomValue('category', category)}//the first argument which element of DefaultValues we save onto, the second is what value we save onto that element
+                            selected={category === item.label}//by the very act of selecting category becomes the item.label, otherwise it has no value
                             label={item.label}
                             icon={item.icon}
                         />
@@ -117,15 +127,29 @@ const RentModal = () => {
         </div>
     )
 
+    if(step === STEPS.LOCATION){
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Where is your place located?"
+                    subtitle="Help guests fund you!"
+                />
+
+                <CountrySelect />
+            </div>
+        )
+    }
+    
+    
     return (
         <Modal
             title="Airbnb your home!"
             actionLabel={actionLabel}
             secondaryActionLabel={secondaryActionLabel}
-            secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
+            secondaryAction={step === STEPS.CATEGORY ? undefined : onBack} //back btn
             isOpen={rentModal.isOpen}
             onClose={rentModal.onClose}
-            onSubmit={rentModal.onClose}
+            onSubmit={onNext} //next or submit btn
             body={bodyContent}
         >
 
