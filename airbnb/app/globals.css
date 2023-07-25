@@ -7,4 +7,11 @@ body,
 :root {
     min-height: 100vh;
 }
+
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top{
+    z-index: 0 !important;
+}
 /* NB https://greggod.medium.com/css-do-not-put-height-100-on-the-body-html-e36bda3551b3 min-height:100vh vs height: 100% */

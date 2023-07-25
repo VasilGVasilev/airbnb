@@ -11,6 +11,7 @@ import { useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
 import Map from "../Map";
+import dynamic from "next/dynamic";
 
 // the modal constist of the following parts:
 // we have the form initialised and 'watch' and 'setValue' necessary for its update
@@ -58,6 +59,12 @@ const RentModal = () => {
     const category = watch('category'); //we utilize watch to watch for category input changes (it was first set in defatultValues)
     const location = watch('location')
 
+// instead of normal import, the problmatic leaflet library (not supported by React) requires the following import to bypass render errors
+// thus, dynamic import and re-render it using the location of world-country library
+    const Map = useMemo(()=>dynamic(()=>import('../Map'), {
+        ssr:false
+    }), [location]) //re-render everytime location changes
+    
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
             shouldDirty: true,
@@ -141,7 +148,8 @@ const RentModal = () => {
                     onChange={(value)=>setCustomValue('location', value)}
                     value={location}
                 />
-                <Map />
+                {/* we pass in latlng of a country from world-countries library to map leaflet*/}
+                <Map center={location?.latlng} />
             </div>
         )
     }

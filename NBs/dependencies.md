@@ -9,3 +9,5 @@ bcrypt + -D @types/bcrypt
 query-string
 world-countries
 react-select
+leaflet + -D @types/leaflet
+react-leaflet
