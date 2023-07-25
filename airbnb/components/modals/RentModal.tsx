@@ -10,6 +10,7 @@ import CategoryInput from "../inputs/CategoryInput";
 import { useMemo, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
+import Map from "../Map";
 
 // the modal constist of the following parts:
 // we have the form initialised and 'watch' and 'setValue' necessary for its update
@@ -140,6 +141,7 @@ const RentModal = () => {
                     onChange={(value)=>setCustomValue('location', value)}
                     value={location}
                 />
+                <Map />
             </div>
         )
     }
