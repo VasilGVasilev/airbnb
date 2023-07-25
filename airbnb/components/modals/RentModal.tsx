@@ -55,6 +55,7 @@ const RentModal = () => {
     });//values are set here and updated along the way of finishing the rentModal form, all sent finally with the final submit
 
     const category = watch('category'); //we utilize watch to watch for category input changes (it was first set in defatultValues)
+    const location = watch('location')
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -135,7 +136,10 @@ const RentModal = () => {
                     subtitle="Help guests fund you!"
                 />
 
-                <CountrySelect />
+                <CountrySelect
+                    onChange={(value)=>setCustomValue('location', value)}
+                    value={location}
+                />
             </div>
         )
     }
