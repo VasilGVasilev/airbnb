@@ -8,13 +8,16 @@ import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
 
 import { useMemo, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
 import Map from "../Map";
 import dynamic from "next/dynamic";
 import Counter from "../inputs/Counter";
 import ImageUpload from "../inputs/ImageUpload";
 import Input from "../inputs/Input";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 // the modal constist of the following parts:
 // we have the form initialised and 'watch' and 'setValue' necessary for its update
@@ -32,6 +35,8 @@ enum STEPS {
 }
 
 const RentModal = () => {
+
+    const router = useRouter();
     const rentModal = useRentModal();
 
     const [step, setStep] = useState(STEPS.CATEGORY);
@@ -90,6 +95,29 @@ const RentModal = () => {
 
     const onNext = () => {
         setStep((value) => value + 1);
+    }
+
+    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        if(step !== STEPS.PRICE){
+            return onNext(); //every time we click on next, we are actually calling the submit function, thus, actual submit only when on PRICE 
+        }
+
+        setIsLoading(true);
+
+        axios.post('/api/listings', data)
+            .then(()=>{
+                toast.success('Listing Created!');
+                router.refresh();
+                reset();//clear form (from react-hook-form)
+                setStep(STEPS.CATEGORY)// reset UI of rentModal to first num element of form -> category
+                rentModal.onClose();
+            })
+            .catch(()=>{
+                toast.error('Something went wrong');
+            })
+            .finally(()=>{
+                setIsLoading(false);
+            })
     }
 
     // LIMIT OF BTN NOT OVERFLOWING OR FALLING BELOW ENUM
@@ -264,16 +292,15 @@ const RentModal = () => {
     return (
         <Modal
             title="Airbnb your home!"
+            disabled={isLoading}
             actionLabel={actionLabel}
             secondaryActionLabel={secondaryActionLabel}
             secondaryAction={step === STEPS.CATEGORY ? undefined : onBack} //back btn
             isOpen={rentModal.isOpen}
             onClose={rentModal.onClose}
-            onSubmit={onNext} //next or submit btn
+            onSubmit={handleSubmit(onSubmit)} //next or submit btn
             body={bodyContent}
-        >
-
-        </Modal>
+        />
     )
 }
 
