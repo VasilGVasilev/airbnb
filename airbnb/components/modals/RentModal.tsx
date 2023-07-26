@@ -12,6 +12,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
 import Map from "../Map";
 import dynamic from "next/dynamic";
+import Counter from "../inputs/Counter";
 
 // the modal constist of the following parts:
 // we have the form initialised and 'watch' and 'setValue' necessary for its update
@@ -57,13 +58,17 @@ const RentModal = () => {
     });//values are set here and updated along the way of finishing the rentModal form, all sent finally with the final submit
 
     const category = watch('category'); //we utilize watch to watch for category input changes (it was first set in defatultValues)
-    const location = watch('location')
+    const location = watch('location');
+    const guestCount = watch('guestCount');
+    const roomCount = watch('roomCount');
+    const bathroomCount = watch('bathroomCount');
+
 
 // instead of normal import, the problmatic leaflet library (not supported by React) requires the following import to bypass render errors
 // thus, dynamic import and re-render it using the location of world-country library
     const Map = useMemo(()=>dynamic(()=>import('../Map'), {
         ssr:false
-    }), [location]) //re-render everytime location changes
+    }), [location]) //re-render everytime location changes, but IMPORTANT -> it is subsequent to the initial JS bundle
     
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -150,6 +155,38 @@ const RentModal = () => {
                 />
                 {/* we pass in latlng of a country from world-countries library to map leaflet*/}
                 <Map center={location?.latlng} />
+            </div>
+        )
+    }
+
+    if(step === STEPS.INFO){
+        bodyContent = (
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Share some basics about your place"
+                    subtitle="What amenities do you have?"
+                />
+                <hr />
+                <Counter
+                    title="Guests"
+                    subtitle="How many guests do you allow?"
+                    value={guestCount}
+                    onChange={(value)=>setCustomValue('guestCount', value)}
+                />
+                <hr />
+                <Counter
+                    title="Rooms"
+                    subtitle="How many rooms do you have?"
+                    value={roomCount}
+                    onChange={(value)=>setCustomValue('roomCount', value)}
+                />
+                <hr />
+                <Counter
+                    title="Bathrooms"
+                    subtitle="How many bathrooms do you have?"
+                    value={bathroomCount}
+                    onChange={(value)=>setCustomValue('bathroomCount', value)}
+                />
             </div>
         )
     }
