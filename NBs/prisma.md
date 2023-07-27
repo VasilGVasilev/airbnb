@@ -168,3 +168,15 @@ In Mongoose, you can  represent the owner of the relationship by creating a refe
 
 
 once you push the schema to sync with DB you can extract a model for a type, for example -> User is used in the NavbarProps interface 
+
+
+Need a type for Typescript, prisma client provides a **type based on the model** created:
+
+```sh
+import { Listing } from "@prisma/client";
+
+interface ListingCardProps{
+    key: string;
+    data: Listing; 
+}
+```
