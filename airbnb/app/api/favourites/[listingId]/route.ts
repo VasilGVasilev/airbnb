@@ -30,5 +30,4 @@ export async function POST(
 // NB BEST PRACTICE TO clone arrays when copying    let favoriteIds = [...(currentUser.favouriteIds || [])]
 // (currentUser.favouriteIds || []) will check if first arg is truthy and if so use its value, if not use an empty array value
 // the spread syntax is necessary so that favoriteIds are a copy of the array, not a reference,
-// BUT mind that spread syntax is making a shallow copy. see more on shallow vs deep clone
-// also see https://dev.to/samanthaming/how-to-deep-clone-an-array-in-javascript-3cig
+// BUT mind that spread syntax is making a shallow copy. see https://dev.to/vasilgvasilev/copying-an-array-in-javascript-2dg3
