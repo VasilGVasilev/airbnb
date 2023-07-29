@@ -4,7 +4,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb"
 
 interface IParams {
-    listingsId?: string;
+    listingId?: string;
 }
 
 export async function POST(
@@ -17,9 +17,9 @@ export async function POST(
         return NextResponse.error();
     }
     
-    const { listingsId } = params;
+    const { listingId } = params;
 
-    if(!listingsId || typeof listingsId !== 'string'){
+    if(!listingId || typeof listingId !== 'string'){
         throw new Error('Invalid ID');
     }
 
@@ -27,7 +27,7 @@ export async function POST(
     let favouriteIds = [...(currentUser.favouriteIds || [])]
 
     // add to favs
-    favouriteIds.push(listingsId);
+    favouriteIds.push(listingId);
 
     // update DB with new favs array
     const user = await prisma.user.update({
@@ -52,17 +52,17 @@ export async function DELETE(
         return NextResponse.error();
     }
 
-    const { listingsId } = params;
+    const { listingId } = params;
 
-    if(!listingsId || typeof listingsId !== 'string'){
+    if(!listingId || typeof listingId !== 'string'){
         throw new Error('Invalid ID');
     }
     
     // create favs out of extracted user favs
     let favouriteIds = [...(currentUser.favouriteIds || [])]
 
-    // create a shallow copy without the filtered listingsId
-    favouriteIds = favouriteIds.filter((id)=>id !== listingsId);
+    // create a shallow copy without the filtered listingId
+    favouriteIds = favouriteIds.filter((id)=>id !== listingId);
 
     // update DB with new favs array
     const user = await prisma.user.update({
