@@ -30,7 +30,7 @@ export default async function Home() {
                 2xl:grid-cols-6
                 gap-8
             ">
-                {listings.map((listing: any) => {
+                {listings.map((listing) => {
                     return (
                         <ListingCard
                             currentUser={currentUser}
@@ -43,3 +43,9 @@ export default async function Home() {
         </Container>
     )
 }
+
+
+// NB  there is an error about importing server component data into a client component
+// see ListingCard accepting data which is a fetched via prisma from DB
+// to deal with it, we must update the return of getListings() action to have proper createdAt format 
+// see getListings action
