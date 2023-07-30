@@ -134,4 +134,5 @@ const ListingCard: React.FC<ListingCardProps> = ({
 export default ListingCard
 
 
-// NB group: when we hover on any part of the listing card which has a group tag, we will enlarge the image with group:hover tag
+// NB group: 
+// when we hover on any part of the listing card which has a group tag, we will enlarge the image with group:hover tag
