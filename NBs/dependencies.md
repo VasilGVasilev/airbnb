@@ -13,3 +13,4 @@ leaflet + -D @types/leaflet
 react-leaflet
 next-cloudinary + *cloudinary for imageupload*
 date-fns
+react-date-range + -D @types/react-date-range
