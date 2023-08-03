@@ -170,6 +170,9 @@ In Mongoose, you can  represent the owner of the relationship by creating a refe
 once you push the schema to sync with DB you can extract a model for a type, for example -> User is used in the NavbarProps interface 
 
 
+
+Prisma provides an automatically generated TypeScript client based on your database schema. This generated client includes TypeScript types that correspond to your database models, making it easy to work with your data using type safety in TypeScript.
+
 Need a type for Typescript, prisma client provides a **type based on the model** created:
 
 ```sh
