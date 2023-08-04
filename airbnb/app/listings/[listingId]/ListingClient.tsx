@@ -1,17 +1,20 @@
 'use client'
 
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import useLoginModal from '@/app/hooks/useLoginModal';
-import { SafeListing, SafeUser } from '@/app/types';
+
+import { useCallback, useEffect, useMemo, useState } from 'react'
+
+import { SafeListing, SafeReservation, SafeUser } from '@/app/types';
+
 import Container from '@/components/Container';
 import ListingHead from '@/components/listings/ListingHead';
 import ListingInfo from '@/components/listings/ListingInfo';
 import ListingReservation from '@/components/listings/ListingReservation';
+
 import { categories } from '@/components/navbar/Categories';
-import { Reservation } from '@prisma/client';
-import axios from 'axios';
 import { differenceInCalendarDays, eachDayOfInterval } from 'date-fns'; //https://date-fns.org/v2.30.0/docs/eachDayOfInterval
-import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Range } from 'react-date-range';
 import { toast } from 'react-hot-toast';
 
@@ -22,7 +25,7 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-    reservations?: Reservation[];
+    reservations?: SafeReservation[];
     listing: SafeListing & {
         user: SafeUser;
     }; //see in getListingById.ts we include user into listing via prisma 'include:'

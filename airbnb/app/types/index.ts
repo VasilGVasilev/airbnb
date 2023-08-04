@@ -1,4 +1,4 @@
-import { Listing, User } from "@prisma/client";
+import { Listing, Reservation, User } from "@prisma/client";
 
 export type SafeListing = Omit<
     Listing,
@@ -14,6 +14,16 @@ export type SafeUser = Omit<
     createdAt: string;
     updatedAt: string;
     emailVerified: string | null;
+}
+
+export type SafeReservation = Omit<
+    Reservation,
+    "startDate" | "endDate" | "createdAt" | "listing"
+> & {
+    startDate: string;
+    endDate: string;
+    createdAt: string;
+    listing: SafeListing;
 }
 
 // Constructs a type by picking all properties from Type and then removing Keys (string literal or union of string literals).
