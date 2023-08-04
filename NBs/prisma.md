@@ -171,6 +171,8 @@ once you push the schema to sync with DB you can extract a model for a type, for
 
 
 
+Automatic types based on Prisma models
+
 Prisma provides an automatically generated TypeScript client based on your database schema. This generated client includes TypeScript types that correspond to your database models, making it easy to work with your data using type safety in TypeScript.
 
 Need a type for Typescript, prisma client provides a **type based on the model** created:
@@ -183,3 +185,9 @@ interface ListingCardProps{
     data: Listing; 
 }
 ```
+
+
+React accepts plain objects only, thus:
+1) change the values of objects .toString() when extracting a DB model via axios see actions dir
+2) change the types for the props to be safe (accepting plain objects intead of non-plain objects)
+ex. reservation gets updated to have plain objects when extracted via axios to render on page and the type of reservation becomes SafeReservation
