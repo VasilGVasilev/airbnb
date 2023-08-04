@@ -14,4 +14,4 @@ const TripsPage = async () => {
             />
         )
     }
-}
+};
