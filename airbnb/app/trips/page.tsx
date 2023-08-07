@@ -9,8 +9,8 @@ const TripsPage = async () => {
     if(!currentUser){
         return (
             <EmptyState
-                title=""
-                subtitle=""
+                title="Unauthorized"
+                subtitle="Please login"
             />
         )
     }
