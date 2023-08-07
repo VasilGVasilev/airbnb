@@ -3,10 +3,15 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prismadb';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
-// this handles the DB update - BE 
+// this handles the FE based on the DB - FE 
 
-export async function POST(
-    request: Request
+interface IParams {
+    reservationId?: string;
+}
+
+export async function DELETE(
+    request: Request,
+    { params }: { params: IParams }
 ) {
     const currentUser = await getCurrentUser();
 
