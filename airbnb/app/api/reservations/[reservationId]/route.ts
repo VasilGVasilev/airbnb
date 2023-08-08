@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prismadb';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
-// this handles the FE based on the DB - FE 
+// DELETE is a subaction of create, create reservation is on /reservations/, delete is on /reservations/someId
 
 interface IParams {
     reservationId?: string;
@@ -15,39 +15,25 @@ export async function DELETE(
 ) {
     const currentUser = await getCurrentUser();
 
-    if(!currentUser) {
+    if (!currentUser) {
         return NextResponse.error();
     }
 
-    const body = await request.json();
+    const { reservationId } = params;
 
-    const {
-        listingId,
-        startDate,
-        endDate,
-        totalPrice
-    } = body;
-    
-    if(!listingId || !startDate || !endDate || !totalPrice){
-        return NextResponse.error();
+    if (!reservationId || typeof reservationId !== 'string'){
+        throw new Error('Invalid ID');
     }
 
-    // update current listing and create a new reservation in DB
-    const listingAndReservation = await prisma.listing.update({
-        where: {
-            id: listingId
-        },
-        data: { //update listing by creating a new reservation that is also saved into current listing
-            reservations: {
-                create: {
-                    userId: currentUser.id,
-                    startDate,
-                    endDate,
-                    totalPrice
-                }
-            }
-        }
-    });
+    const reservation = await prisma.reservation.deleteMany({
+        where: { //where reservationId && userId: currentUser.id || reservationId && listing: { userId: currentUser.id }
+            id: reservationId,
+            OR: [
+                { userId: currentUser.id}, 
+                { listing: { userId: currentUser.id } }
+            ]
+        } // deleted is the reservation either by user that has made the reservation -> userId: currentUser.id; or the user that made the listing -> listing: { userId: currentUser.id }
+    })
 
-    return NextResponse.json(listingAndReservation);
+    return NextResponse.json(reservation);
 }
