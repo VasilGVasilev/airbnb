@@ -32,3 +32,5 @@ const onCancel = useCallback((id: string) => {
 ```
 
 router may change inbetween triggering onCancel and router.refresh(), thus, it is in the dep array. This means that the onCancel function is not entirely outside of the re-render cycle, but at least its re-rendering is limited to the potential changes of router's value.
+
+why we do not put in id or serDeletingId since it is a changin state -> because the state is changed via the useCallback hook and it cannot change inbetween re-renders of the useCallback hook

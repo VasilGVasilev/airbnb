@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/libs/prismadb';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
-// DELETE is a subaction of create, create reservation is on /reservations/, delete is on /reservations/someId
+// DELETE is a subaction of create, create reservation is on /api/reservations/, delete is on /api/reservations/someId
 
 interface IParams {
     reservationId?: string;
