@@ -26,7 +26,7 @@ export async function DELETE(
     }
 
     const reservation = await prisma.reservation.deleteMany({
-        where: { //where reservationId && userId: currentUser.id || reservationId && listing: { userId: currentUser.id }
+        where: { //user that made reservation can cancel but also listing owner can cancel (reject) reservation
             id: reservationId,
             OR: [
                 { userId: currentUser.id}, 
