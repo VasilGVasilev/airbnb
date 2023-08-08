@@ -1,11 +1,24 @@
 import { Listing, Reservation, User } from "@prisma/client";
 
+// a question arises
+// why do we need to explicitly safeguard types when we return plain object via actions directory (safeguarding the data there)
+// because we use the prisma default type (based on model) as a type for the interface
+// this type is not the formatted by our backend in actions directory but the DB one, which still has non-plain objects
+
 export type SafeListing = Omit<
     Listing,
     "createdAt"
 > & {
     createdAt: string;
 }
+
+export type FavouriteListing = Omit<
+    Listing,
+    "createdAt"
+> & {
+    createdAt: string;
+}
+
 
 export type SafeUser = Omit<
     User,
