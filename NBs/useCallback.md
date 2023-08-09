@@ -1,10 +1,50 @@
 the hook caches functions between re-renders:
 it does not store state, but you can cache the state setter to apply later in code in a cleaner fashion rather then repeat yourself: toggle functionality is a great example
 
-Why useCallback instead of storing function in a variable:
-- useCallback is a React hook used for optimizing the performance of functional components, particularly when dealing with child components and re-rendering behavior. It's often used in conjunction with the React.memo higher-order component (HOC) to avoid unnecessary re-renders.
+We use useCallback hook in React instead of simply storing functions inside variables outside of components because useCallback memoizes the function, which means that it only re-runs the function if one of its dependencies changes. This can improve performance by preventing unnecessary re-renders.
 
-- When you store a function in a variable outside the component, the function is recreated every time the component renders. This can lead to unnecessary re-renders of child components that depend on this function as a prop, even if the function's logic and output remain the same.
+For example, let's say we have a function that gets the current time. We could store this function in a variable outside of our component like this:
+
+```sh
+
+const getTime = () => {
+  return new Date().toLocaleString();
+};
+```
+
+Then, we could pass this function as a prop to our component:
+
+```sh
+const MyComponent = ({ getTime }) => {
+  return <div>The current time is {getTime()}</div>;
+};
+```
+
+Every time the component re-renders, the getTime function will be re-run, even if the current time hasn't changed. This can be inefficient, especially if the getTime function is expensive to run.
+
+Instead, we can use useCallback to memoize the getTime function. This will ensure that the function is only re-run if one of its dependencies changes, such as the current time. To do this, we would use the useCallback hook like this:
+
+```sh
+const MyComponent = () => {
+  const [getTime, getTimeRef] = useCallback(() => {
+    return new Date().toLocaleString();
+  }, []);
+
+  return <div>The current time is {getTime()}</div>;
+};
+```
+
+The useCallback hook takes two arguments: the function to memoize, and an array of dependencies. The dependencies are the values that the function depends on. If any of the dependencies change, the function will be re-run. In this case, the only dependency is the current time, so the function will only be re-run if the current time changes.
+
+This can significantly improve the performance of our component, especially if the getTime function is expensive to run.
+
+Here are some additional benefits of using useCallback:
+
+- It can help to prevent memory leaks.
+- It can make our code more predictable and easier to debug.
+- It can improve the performance of our components.
+
+Overall, useCallback is a powerful hook that can be used to improve the performance and maintainability of our React components.
 
 **Where is the function stored?**
 When using the useCallback hook in React, the function is stored outside of the render cycle. The purpose of useCallback is to return a memoized version of the function, meaning that it retains the **same memory reference across renders** unless one of the variables in its dependency array changes. 
