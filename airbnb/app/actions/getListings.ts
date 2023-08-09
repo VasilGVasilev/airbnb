@@ -11,13 +11,13 @@ export default async function getListings(
         const { userId } = params;
         
         let query: any = {};
-
+        
         if (userId){
             query.userId = userId;
         }
 
         const listings = await prisma.listing.findMany({
-            where: query,
+            where: query, //If you put where: {} (the case where we are not filtering but just starting home page with all listings) in the findMany method in Prisma, it will return all the records in the table. This is because the where clause is used to filter the results of the query, and if you don't specify any conditions, then all the records will be returned.
             orderBy:{
                 createdAt:'desc'
             }
