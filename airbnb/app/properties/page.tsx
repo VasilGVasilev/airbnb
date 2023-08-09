@@ -1,10 +1,10 @@
 import EmptyState from "@/components/EmptyState";
 
 import getCurrentUser from "../actions/getCurrentUser";
-import getReservations from "../actions/getReservations";
-import TripsClient from "./TripsClient";
+import getListings from "../actions/getListings";
+import PropertiesClient from "./PropertiesClient";
 
-const TripsPage = async () => {
+const PropertiesPage = async () => {
     const currentUser = await getCurrentUser();
 
     // not really necessary since trips will be a protected route
@@ -17,25 +17,25 @@ const TripsPage = async () => {
         )
     }
 
-    const reservations = await getReservations({ 
+    const listings = await getListings({ 
         userId: currentUser.id
     });
 
-    if(reservations.length === 0){
+    if(listings.length === 0){
         return (
             <EmptyState
-                title="No trips found"
-                subtitle="Looks like you havent reserved any trips."
+                title="No properties found"
+                subtitle="Looks like you have no properties."
             />
         )
     }
 
     return (
-        <TripsClient
-            reservations={reservations}
+        <PropertiesClient
+            listings={listings}
             currentUser={currentUser}
         />
     )
 };
 
-export default TripsPage;
+export default PropertiesPage;
