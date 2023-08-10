@@ -3,6 +3,7 @@ import getListingById from "@/app/actions/getListingById";
 import EmptyState from "@/components/EmptyState";
 import ListingClient from "./ListingClient";
 import getReservations from "@/app/actions/getReservations";
+import ClientOnly from "@/components/ClientOnly";
 
 interface IParams {
     listingId?: string;
@@ -17,15 +18,19 @@ const ListingPage = async (
 
     if (!listing){
         return (
-            <EmptyState />
+            <ClientOnly>
+                <EmptyState />
+            </ClientOnly>
         )
     } // to catch -> 'listing' is possibly 'null'. 
     return (
-        <ListingClient
-            listing={listing}
-            reservations={reservations}
-            currentUser={currentUser}
-        />
+        <ClientOnly>
+            <ListingClient
+                listing={listing}
+                reservations={reservations}
+                currentUser={currentUser}
+            />
+        </ClientOnly>
     )
 }
 
