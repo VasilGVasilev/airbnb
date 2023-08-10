@@ -15,8 +15,8 @@ const font = Nunito({
 })
 
 export const metadata: Metadata = {
-  title: 'Airbnb',
-  description: 'Airbnb clone',
+  title: 'VGV Airbnb',
+  description: 'Vasil Vasilev\'s Airbnb clone',
 }
 // async await because we are communicating inter-modules!
 export default async function RootLayout({
