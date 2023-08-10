@@ -2,18 +2,81 @@ import prisma from '@/app/libs/prismadb'
 
 export interface IListingsParams {
     userId?: string;
+    guestCount?: number;
+    roomCount?: number;
+    bathroomCount?: number;
+    startDate?: string;
+    endDate?: string;
+    locationValue?: string;
+    category?: string;
 }
+  
 
 export default async function getListings(
     params: IListingsParams
 ) {
     try {
-        const { userId } = params;
+        const {
+            userId,
+            roomCount, 
+            guestCount, 
+            bathroomCount, 
+            locationValue,
+            startDate,
+            endDate,
+            category,
+        } = params;
         
         let query: any = {};
         
-        if (userId){
+
+        if (userId) {
             query.userId = userId;
+        }
+
+        if (category) {
+            query.category = category;
+        }
+
+        if (roomCount) {
+            query.roomCount = {
+                gte: +roomCount //'gte' - greater than or equal, '+' - transforms the roomCount from a string to a definite number 
+            }
+        }
+
+        if (guestCount) {
+            query.guestCount = {
+                gte: +guestCount
+            }
+        }
+
+        if (bathroomCount) {
+            query.bathroomCount = {
+                gte: +bathroomCount
+            }
+        }
+
+        if (locationValue) {
+            query.locationValue = locationValue;
+        }
+
+        if (startDate && endDate) {
+            query.NOT = {
+                reservations: {
+                some: {
+                        OR: [
+                            {
+                                endDate: { gte: startDate },
+                                startDate: { lte: startDate }
+                            },
+                            {
+                                startDate: { lte: endDate },
+                                endDate: { gte: endDate }
+                            }
+                        ]
+                    }
+                }
+            }
         }
 
         const listings = await prisma.listing.findMany({
@@ -35,6 +98,18 @@ export default async function getListings(
     }
 }
 
+// NB
+
 // we cannot just return listings, but safeListings
 // we also need a new type
 // see app/types
+
+// gte - Get all Post records where likes is greater than or equal to 9
+
+// const getPosts = await prisma.post.findMany({
+//     where: {
+//       likes: {
+//         gte: 9,
+//       },
+//     },
+//  })
