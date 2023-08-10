@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Container from "@/components/Container";
 import EmptyState from "@/components/EmptyState";
 import getListings, { IListingsParams } from "./actions/getListings";
@@ -5,7 +7,6 @@ import ListingCard from "@/components/listings/ListingCard";
 import getCurrentUser from "./actions/getCurrentUser";
 import ClientOnly from "@/components/ClientOnly";
 
-export const dynamic = 'force-dynamic';
 
 
 interface HomeProps {
