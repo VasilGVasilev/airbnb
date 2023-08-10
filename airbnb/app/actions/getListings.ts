@@ -61,19 +61,19 @@ export default async function getListings(
         }
 
         if (startDate && endDate) {
-            query.NOT = {
+            query.NOT = { // .NOT we want all but the following:
                 reservations: {
-                some: {
+                    some: {
                         OR: [
                             {
                                 endDate: { gte: startDate },
                                 startDate: { lte: startDate }
-                            },
+                            }, //exclude all startDates
                             {
                                 startDate: { lte: endDate },
                                 endDate: { gte: endDate }
-                            }
-                        ]
+                            } //exclude all endDates
+                        ] // filter out all conflicts in reservations
                     }
                 }
             }
