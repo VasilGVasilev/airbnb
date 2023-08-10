@@ -78,7 +78,7 @@ const RentModal = () => {
 // thus, dynamic import and re-render it using the location of world-country library
     const Map = useMemo(()=>dynamic(()=>import('../Map'), {
         ssr:false
-    }), [location]) //re-render everytime location changes, but IMPORTANT -> it is subsequent to the initial JS bundle
+    }), []) //re-render everytime location changes, but IMPORTANT -> it is subsequent to the initial JS bundle
     
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
