@@ -14,3 +14,4 @@ react-leaflet
 next-cloudinary + *cloudinary for imageupload*
 date-fns
 react-date-range + -D @types/react-date-range
+react-spinners
