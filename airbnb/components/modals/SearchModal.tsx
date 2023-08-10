@@ -37,20 +37,20 @@ const SearchModal = () => {
 
     });
 
-    const Map = useMemo(()=>dynamic(() => import('../Map'), {
+    const Map = useMemo(() => dynamic(() => import('../Map'), {
         ssr: false,
-    }), [location]);
+    }), []);
 
-    const onBack = useCallback(()=>{
+    const onBack = useCallback(() => {
         setStep((value) => value - 1)
     }, [])
 
-    const onNext = useCallback(()=>{
+    const onNext = useCallback(() => {
         setStep((value) => value + 1)
     }, [])
 
-    const onSubmit = useCallback( async ()=>{
-        if(step !== STEPS.INFO){
+    const onSubmit = useCallback(async () => {
+        if (step !== STEPS.INFO) {
             return onNext();
         }
 
@@ -69,18 +69,18 @@ const SearchModal = () => {
         };
 
         // we need to make it passable to the URL, so that later we can update the server component
-        if(dateRange.startDate){
+        if (dateRange.startDate) {
             updateQuery.startDate = formatISO(dateRange.startDate);
         }
 
-        if(dateRange.endDate){
+        if (dateRange.endDate) {
             updateQuery.endDate = formatISO(dateRange.endDate);
         }
 
         const url = qs.stringifyUrl({
             url: '/',
             query: updateQuery
-        }, {skipNull: true});
+        }, { skipNull: true });
 
         setStep(STEPS.LOCATION);
         searchModal.onClose();
@@ -88,107 +88,111 @@ const SearchModal = () => {
         // apply all filters
         router.push(url);
 
-    }, 
-    [
-        step,
-        searchModal,
-        location,
-        router,
-        guestCount,
-        roomCount,
-        bathroomCount,
-        dateRange,
-        onNext,
-        params
-    ]);
+    },
+        [
+            step,
+            searchModal,
+            location,
+            router,
+            guestCount,
+            roomCount,
+            bathroomCount,
+            dateRange,
+            onNext,
+            params
+        ]);
 
-    const actionLabel = useMemo(()=>{
-        if(step === STEPS.INFO){
+    const actionLabel = useMemo(() => {
+        if (step === STEPS.INFO) {
             return 'Search';
         }
         return 'Next';
     }, [step])
 
-    const secondaryActionLabel = useMemo(()=>{
-        if(step === STEPS.LOCATION){
-            return undefined
+    const secondaryActionLabel = useMemo(() => {
+        if (step === STEPS.LOCATION) {
+            return undefined //see conditional in Modal component -> secondaryAction that enables or disables actual button
         }
         return 'Back';
     }, [step]);
 
     let bodyContent = (
         <div className="flex flex-col gap-8">
-          <Heading
-            title="Where do you wanna go?"
-            subtitle="Find the perfect location!"
-          />
-          <CountrySelect 
-            value={location} 
-            onChange={(value) => 
-              setLocation(value as CountrySelectValue)} 
-          />
-          <hr />
-          <Map center={location?.latlng} />
+            <Heading
+                title="Where do you wanna go?"
+                subtitle="Find the perfect location!"
+            />
+            <CountrySelect
+                value={location}
+                onChange={(value) =>
+                    setLocation(value as CountrySelectValue)
+                }
+            />
+            <hr />
+            <Map center={location?.latlng} />
         </div>
-      )
-    
-      if (step === STEPS.DATE) {
+    )
+
+    if (step === STEPS.DATE) {
         bodyContent = (
-          <div className="flex flex-col gap-8">
-            <Heading
-              title="When do you plan to go?"
-              subtitle="Make sure everyone is free!"
-            />
-            <Calendar
-              onChange={(value) => setDateRange(value.selection)}
-              value={dateRange}
-            />
-          </div>
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="When do you plan to go?"
+                    subtitle="Make sure everyone is free!"
+                />
+                <Calendar
+                    onChange={(value) => setDateRange(value.selection)}
+                    value={dateRange}
+                />
+            </div>
         )
-      }
-    
-      if (step === STEPS.INFO) {
+    }
+
+    if (step === STEPS.INFO) {
         bodyContent = (
-          <div className="flex flex-col gap-8">
-            <Heading
-              title="More information"
-              subtitle="Find your perfect place!"
-            />
-            <Counter 
-              onChange={(value) => setGuestCount(value)}
-              value={guestCount}
-              title="Guests" 
-              subtitle="How many guests are coming?"
-            />
-            <hr />
-            <Counter 
-              onChange={(value) => setRoomCount(value)}
-              value={roomCount}
-              title="Rooms" 
-              subtitle="How many rooms do you need?"
-            />        
-            <hr />
-            <Counter 
-              onChange={(value) => {
-                setBathroomCount(value)
-              }}
-              value={bathroomCount}
-              title="Bathrooms"
-              subtitle="How many bahtrooms do you need?"
-            />
-          </div>
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="More information"
+                    subtitle="Find your perfect place!"
+                />
+                <Counter
+                    onChange={(value) => setGuestCount(value)}
+                    value={guestCount}
+                    title="Guests"
+                    subtitle="How many guests are coming?"
+                />
+                <hr />
+                <Counter
+                    onChange={(value) => setRoomCount(value)}
+                    value={roomCount}
+                    title="Rooms"
+                    subtitle="How many rooms do you need?"
+                />
+                <hr />
+                <Counter
+                    onChange={(value) => {
+                        setBathroomCount(value)
+                    }}
+                    value={bathroomCount}
+                    title="Bathrooms"
+                    subtitle="How many bahtrooms do you need?"
+                />
+            </div>
         )
-      }
+    }
 
     return (
         <Modal
             isOpen={searchModal.isOpen}
             onClose={searchModal.onClose}
-            onSubmit={searchModal.onOpen}
+            onSubmit={onSubmit}
             title="Filters"
-            actionLabel="Search"
+            actionLabel={actionLabel}
+            secondaryAction={step === STEPS.LOCATION ? undefined : onBack}
+            secondaryActionLabel={secondaryActionLabel}
+            body={bodyContent}
         />
     )
 }
 
-export default SearchModal
+export default SearchModal;
