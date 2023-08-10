@@ -5,6 +5,7 @@ import ListingCard from "@/components/listings/ListingCard";
 import getCurrentUser from "./actions/getCurrentUser";
 import ClientOnly from "@/components/ClientOnly";
 
+export const dynamic = 'force-dynamic';
 
 
 interface HomeProps {
