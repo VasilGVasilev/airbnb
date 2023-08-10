@@ -12,7 +12,7 @@ interface HomeProps {
 
 const Home = async ({ searchParams}: HomeProps) => {
     
-    const listings = await getListings(searchParams);
+    const listings = await getListings(searchParams); //search params are gathered via {} the empty object, which is either showing all or when we apply filter and router.push the updatedQuery url, we have an object full of filters
     const currentUser = await getCurrentUser();
 
     if(listings.length === 0){
