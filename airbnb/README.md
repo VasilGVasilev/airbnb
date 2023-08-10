@@ -42,4 +42,3 @@ My adds on to deploy on vercel:
 "build": "prisma generate && next build",
 ```
 
-- vercel
