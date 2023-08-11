@@ -1,7 +1,7 @@
 # Full Stack Airbnb Clone with Next.js 13 App Router: React, Tailwind, Prisma, MongoDB, NextAuth 2023
 
 ## [Go to Website](https://vgv-rental.vercel.app/)
-[![alt text](https://github.com/VasilGVasilev/simpleChat/blob/main/NBs/vgv-chat.png)](https://vgv-rental.vercel.app/)
+[![alt text](https://github.com/VasilGVasilev/airbnb/blob/main/NBs/airbnb-welcome-image.png)](https://vgv-rental.vercel.app/)
 
 ## What's in the stack
 
@@ -62,6 +62,6 @@ Other dependencies:
 ## Learning achievements:
 - Basic understanding of Typescript
 - Utilizing advanced library for authentication
-- Deep dive into state with **useReducer()** rendering UI based on viewport
-- Learning useEffect() cleanup function relevance
-- First project with unit tests.
+- Deep dive into modularity and reusablility of components
+- Understanding useCallback() and useMemo() hooks
+- Reflecting on the need to sanitize data from DB to be useable in React
