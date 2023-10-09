@@ -47,7 +47,7 @@ Features:
 - Understanding useCallback() and useMemo() hooks
 - Reflecting on the need to sanitize data from DB to be useable in React
 
-Other dependencies:
+## Other dependencies:
 
 - react-icons
 - zustand
