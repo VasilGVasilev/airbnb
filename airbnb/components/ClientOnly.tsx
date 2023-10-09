@@ -25,3 +25,4 @@ const ClientOnly: React.FC<ClientOnlyProps> = ({
 };
 
 export default ClientOnly;
+// ClientOnly logic necessary due to Next.js bug when rendering

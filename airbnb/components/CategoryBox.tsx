@@ -19,10 +19,11 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
     const router = useRouter();
     const params = useSearchParams();
 
+    // it is crucial for the understanding of the following to know that there are two separate entities - the object from the URL and our own updated version of that URL
     const handleClick = useCallback(()=>{
         let currentQuery = {};
 
-        if (params){
+        if (params){ //checking if you have the variable you will use a method on, later -> params.toString()
             currentQuery = qs.parse(params.toString()) //object out of all params
         }
         // if one click, category will be added, if it is added, clicking it a second time will remove ti
@@ -31,7 +32,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
             category: label
         } //when we click ONCE on a category box, its label will be added to the object (updatedQuery) that will form the new query
 
-        // when we click TWICE, we need to remove the category
+        // when we click TWICE, we need to remove the category, namely, if params objects is the same as our own created object to be pushed instead, we need to delete it to not have vercel.app/?category=Pools?category=Pools
         if(params?.get('category') === label){ //https://ultimatecourses.com/blog/query-strings-search-params-react-router
             delete updatedQuery.category;
         }
