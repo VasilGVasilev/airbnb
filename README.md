@@ -1,4 +1,4 @@
-# Full Stack Airbnb Clone with Next.js 13 App Router: React, Tailwind, Prisma, MongoDB, NextAuth 2023
+# Full Stack Airbnb Clone with Next.js 13 App Router: React, Tailwind, Prisma, MongoDB, NextAuth
 
 ## [Go to Website](https://vgv-rental.vercel.app/)
 [![alt text](https://github.com/VasilGVasilev/airbnb/blob/main/NBs/airbnb-welcome-image.png)](https://vgv-rental.vercel.app/)
