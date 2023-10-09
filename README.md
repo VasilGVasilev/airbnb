@@ -4,8 +4,8 @@
 [![alt text](https://github.com/VasilGVasilev/airbnb/blob/main/NBs/airbnb-welcome-image.png)](https://vgv-rental.vercel.app/)
 
 ---
+[![alt text](https://github.com/VasilGVasilev/airbnb/blob/main/NBs/login-form.png)](https://vgv-rental.vercel.app/)
 
-![alt text](https://github.com/VasilGVasilev/airbnb/blob/main/NBs/login-form.png)
 
 ## What's in the stack
 
